@@ -96,23 +96,3 @@ const Spotify = {
 };
         
 export {Spotify};
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * #
- * access_token = BQDC1Nss_0bk6329NEXHUX0_SBDia2Np34OUjVVVYrXMMrY0jngmF7C_MpTWVqCw266QowK4Snyen-yxTRaZLF2gLwDO8OKkEqQtGJK7aK_Cja8sqfz0ZGGvwFOimIy1Jk7zIfB2Mxz-_L0psjGOKVk7kYGUmdtgP9gr2ZSZ1OB6nclR5FyOJ0x8zQON75FmDhEG_VdfQHlLHlbI
- * &
- * token_type = Bearer
- * &
- * expires_in=3600
- */

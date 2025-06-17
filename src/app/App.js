@@ -16,7 +16,7 @@ function App() {
   // sideEffect (Document Load) - called useEffect hook
   // The blank bracket refers to running this hook only once
   useEffect(() => {
-    Spotify.getAccessToken();
+    //Spotify.getAccessToken();
 
     // populate searchResults with defaultValues
     setSearchResults([
@@ -41,9 +41,6 @@ function App() {
         album: "Track 3 Album",
         uri: "Track 3 Uri"
       },
-    ]);
-    
-    setPlayListTracks([
       {
         id: 4,
         name: "Playlist 1",
@@ -59,46 +56,105 @@ function App() {
         uri: "Playlist 2 Uri"
       },
     ]);
+    
+    setPlayListTracks([
+      
+    ]);
 
   },[]); 
   
   // passed as a prop to SearchBar 
   // invokes the Spotify.search() 
   function search(term = ""){
+    setSearchTerm(term);
+    //console.log(term);
     
   }
   
-  function runSearch(){
-    
+  async function runSearch(){
+    const results = await Spotify.search(searchTerm);
+    setSearchResults(results);
   }
 
   // passed as a prop to SearchResults 
   function addTrack(track){
     
+    const findTrack = playListTracks.find((currenttrack) => currenttrack.id === track.id);
+    
+    //alert(track.id);
+    if(!findTrack) {
+      console.log("Add track", track.id);
+      setPlayListTracks([...playListTracks, track]);
+    }
+
+    setSearchResults(
+    searchResults.filter(currenttrack => currenttrack.id != track.id));
+    
   }
 
   // passed as a prop Playlist
   function removeTrack(track){
+    const findTrack = playListTracks.find((currenttrack) => currenttrack.id === track.id);
+    
+    //alert(track.id);
+    if(findTrack) {
+      setPlayListTracks(playListTracks.filter(currenttrack => currenttrack.id != track.id));
+      console.log("Remove track", track.id);
+    }
+
+    setSearchResults([...searchResults, findTrack]);
     
   }
 
   // passed as a prop to PlayList (update playListName)
   function updatePlayListName(strName){
+    setPlayListName(strName);
     
   }
 
   // passed as a prop to PlayList (to save the new playlist)
   function savePlayList(){
-    
+    //TO explore Spotify.savePlayList()
+    //convert to using Authorization code grant
+
+    const savedPlayListName = playListName;
+    const savedPlayListTracks = playListTracks.length;
+
+    alert(`${savedPlayListName} is saved with ${savedPlayListTracks} tracks.`);
+
+    setPlayListName("New Playlist");
+    setPlayListTracks([]);
+    setSearchTerm("");
   }
+
+  //console.log(searchTerm);
+  console.log(playListTracks);
+  console.log(playListName);
 
   return (
     <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
         {/* <!-- Add a SearchBar component --> */}
+        <SearchBar
+          onSearch={search}
+          runSearch={runSearch}
+          searchTerm={searchTerm}
+        />
         <div className="App-playlist">
           {/* <!-- Add a SearchResults component --> */}
+          <SearchResults
+            searchResults={searchResults}
+            addTrack = {addTrack}
+          />
+
+          <Playlist
+            playListTracks={playListTracks}
+            removeTrack={removeTrack}
+            playListName={playListName}
+            updatePlayListName={updatePlayListName}
+            savePlayList = {savePlayList}
+          />
           {/* <!-- Add a Playlist component --> */}
         </div>
       </div>

@@ -10,8 +10,8 @@ const Spotify = {
     //are allowed.
     async getAccessToken(){   // getAccessToken Function Object creates the accessToken if not found
 
-       const clientId = "a49c66b0887b44a6b562c5df422175b5"; // Replace with your Client ID
-       const clientSecret = "f5adb905282d472485e5ee43edaa0328"; // Replace with your Client Secret   
+       const clientId = "Replace with your Client ID"; // Replace with your Client ID
+       const clientSecret = "Replace with your Client Secret"; // Replace with your Client Secret   
 
         const response = await fetch("https://accounts.spotify.com/api/token", {
             method: "POST",
